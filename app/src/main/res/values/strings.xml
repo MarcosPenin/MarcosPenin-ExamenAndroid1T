@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Gonzalez_Marrcos_examen1tAdultos</string>
+    <string name="emailInvalido">Debe introducir un email válido</string>
+    <string name="contrasenaInvalida">Debe introducir una contraseña</string>
+    <string name="contrasenaCorta">Su contraseña debe tener más de 8 caracteres</string>
+    <string name="verContrasena">Ver contraseña</string>
+    <string name="ocultar">Ocultar contraseña</string>
+    <string name="incrementoVacio">Debe introducir un incremento numérico</string>
+    <string name="contrasenasDiferentes">Las contraseñas deben coincidir</string>
+    <string name="usuarioRegistrado">Se ha registrado al usuario</string>
+    <string name="email">Email</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="entrar">ENTRAR</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="repetirContrasena">Repetir contraseña</string>
+    <string name="registrar">REGISTRAR</string>
+    <string name="contador1">Contador 1</string>
+    <string name="contador2">Contador 2</string>
+    <string name="global">Global</string>
+    <string name="incremento">Incremento: </string>
+
+
+
+</resources>
