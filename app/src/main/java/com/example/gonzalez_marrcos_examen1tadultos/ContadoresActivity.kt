@@ -3,8 +3,10 @@ package com.example.gonzalez_marrcos_examen1tadultos
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import com.example.gonzalez_marrcos_examen1tadultos.databinding.ActivityContadoresBinding
+import java.lang.NumberFormatException
 
 
 class ContadoresActivity : AppCompatActivity() {
@@ -12,8 +14,12 @@ class ContadoresActivity : AppCompatActivity() {
     private lateinit var binding: ActivityContadoresBinding
 
     var contador1 = 0
+        set(value) {field=value; binding.contador1.text = value.toString()}
     var contador2 = 0
+        set(value) {field=value; binding.contador2.text = value.toString()}
     var global = 0
+        set(value) {field=value; binding.globalnum.text = value.toString()}
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,49 +27,43 @@ class ContadoresActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.boton1.setOnClickListener {
-            if (binding.numIncremento1.text.toString()=="") {
-                Toast.makeText(this, R.string.incrementoVacio, Toast.LENGTH_SHORT).show()
-                binding.incremento1.setTextColor(Color.parseColor("#FF1744"))
+           try{
+               val incremento=binding.numIncremento1.text.toString().toInt()
+               contador1+=incremento
+               global+=incremento
+               alerta(binding.incremento1,false)
+           } catch (e: NumberFormatException) {
+               alerta(binding.incremento1, true)
+               Toast.makeText(this, R.string.incrementoVacio, Toast.LENGTH_SHORT).show()
+           }
 
-            } else {
-                contador1 += Integer.parseInt(binding.numIncremento1.text.toString())
-                global += Integer.parseInt(binding.numIncremento1.text.toString())
-                binding.contador1.setText(contador1.toString())
-                binding.globalnum.setText(global.toString())
-                binding.incremento1.setTextColor(Color.parseColor("#000000"))
-            }
+
         }
+
 
         binding.boton2.setOnClickListener {
-            if (binding.numIncremento2.text.toString()=="") {
+            try{
+                val incremento=binding.numIncremento2.text.toString().toInt()
+                contador2+=incremento
+                global+=incremento
+                alerta(binding.incremento2,false)
+            } catch (e: NumberFormatException) {  // Si el EditText de incremento no tiene un número
+                alerta(binding.incremento2, true)
                 Toast.makeText(this, R.string.incrementoVacio, Toast.LENGTH_SHORT).show()
-                binding.incremento2.setTextColor(Color.parseColor("#FF1744"))
-
-            } else {
-                contador2 += Integer.parseInt(binding.numIncremento2.text.toString())
-                global += Integer.parseInt(binding.numIncremento2.text.toString())
-                binding.contador2.setText(contador2.toString())
-                binding.globalnum.setText(global.toString())
-                binding.incremento2.setTextColor(Color.parseColor("#000000"))
             }
         }
 
-        binding.borrar1.setOnClickListener {
-            contador1 = 0
-            binding.contador1.setText(contador1.toString())
+        binding.borrar1.setOnClickListener { contador1 = 0}
 
-        }
+        binding.borrar2.setOnClickListener {contador2 = 0}
 
-        binding.borrar2.setOnClickListener {
-            contador2 = 0
-            binding.contador2.setText(contador2.toString())
-        }
+        binding.borrar3.setOnClickListener { global = 0}
 
-        binding.borrar3.setOnClickListener {
-            global = 0
-            binding.globalnum.setText(global.toString())
-        }
+    }
 
+    private fun alerta(tv: TextView, alerta: Boolean) {
+        if (alerta) tv.setTextColor(Color.RED)
+        else tv.setTextColor(Color.BLACK)
     }
 }
 

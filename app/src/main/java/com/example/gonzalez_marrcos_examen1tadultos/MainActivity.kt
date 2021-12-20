@@ -1,13 +1,11 @@
 package com.example.gonzalez_marrcos_examen1tadultos
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Patterns
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.gonzalez_marrcos_examen1tadultos.databinding.ActivityMainBinding
 
 
@@ -34,9 +32,9 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, ContadoresActivity::class.java))
             }catch (e:Excepciones.EmailInvalido){
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-            }catch (e:ContrasenaAusente){
+            }catch (e:Excepciones.ContrasenaAusente){
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
-            }catch (e:ContrasenaCorta){
+            }catch (e:Excepciones.ContrasenaCorta){
                 Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
             }
         }
@@ -51,19 +49,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    class ContrasenaAusente(message: String) : RuntimeException(message)
-    class ContrasenaCorta(message: String) : RuntimeException(message)
-
-
     private fun comprobarEmail(){
         if (binding.email.text.isEmpty()) throw Excepciones.EmailInvalido()
     }
 
     private fun comprobarContrasena(){
-        if (binding.contrasena.text.isEmpty()) throw ContrasenaAusente(getString(R.string.contrasenaInvalida))
-        if (binding.contrasena.text.length<9) throw ContrasenaCorta(getString(R.string.contrasenaCorta))
+        if (binding.contrasena.text.isEmpty()) throw Excepciones.ContrasenaAusente()
+        if (binding.contrasena.text.length<9) throw Excepciones.ContrasenaCorta()
     }
-
 
     private fun visibilidadContrasena(){
         binding.contrasena.transformationMethod=

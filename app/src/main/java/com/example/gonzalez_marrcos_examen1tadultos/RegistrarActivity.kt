@@ -16,21 +16,41 @@ class RegistrarActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.registrar.setOnClickListener {
-            if (binding.email.text.isEmpty()) {
-                Toast.makeText(this, R.string.emailInvalido, Toast.LENGTH_SHORT).show()
-            } else if (binding.contrasena.text.isEmpty()) {
-                Toast.makeText(this, R.string.contrasenaInvalida, Toast.LENGTH_SHORT).show()
-            } else if (binding.contrasena.text.length < 9) {
-                Toast.makeText(this, R.string.contrasenaCorta, Toast.LENGTH_SHORT).show()
-            } else if (!binding.contrasena.text.toString()
-                    .equals(binding.confirmarContrasena.text.toString())
-            ) {
-                Toast.makeText(this, R.string.contrasenasDiferentes, Toast.LENGTH_SHORT).show()
-            } else {
+
+            try{
+                comprobarEmail()
+                comprobarContrasena()
+                binding.confirmarContrasena.text.toString()
                 Toast.makeText(this, R.string.usuarioRegistrado, Toast.LENGTH_SHORT).show()
+            }catch (e:Excepciones.EmailInvalido){
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }catch (e:Excepciones.ContrasenaAusente){
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }catch (e:Excepciones.ContrasenaCorta){
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
+            }catch (e:Excepciones.ContrasenaNoCoincide){
+                Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
             }
-        }
+
     }
+    }
+
+
+    private fun comprobarEmail(){
+        if (binding.email.text.isEmpty()) throw Excepciones.EmailInvalido()
+    }
+
+    private fun comprobarContrasena(){
+        if (binding.contrasena.text.isEmpty()) throw Excepciones.ContrasenaAusente()
+        if (binding.contrasena.text.length<9) throw Excepciones.ContrasenaCorta()
+        if (!binding.contrasena.text.toString().equals(binding.confirmarContrasena.text.toString())) throw Excepciones.ContrasenaNoCoincide()
+    }
+
+
+
+
+
+
 
 
 
